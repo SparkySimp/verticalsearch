@@ -61,4 +61,9 @@ public class OzturkSearcher {
         // If the object was not found, return -1.
         return -1;
     }
+
+    public void getClosestFactors (int number) {
+int closestFactor=0;
+int closestFactor2=0;
+}
 }
