@@ -42,24 +42,23 @@ public class OzturkSearcher {
     public int ozturkSearch(Object[] array, Object what) {
         // Transform the array into a 2D array.
         Object[][] matrix = ozturkTransform(array);
-        // First iterate through matrix's rows.
-        for(int i = 0; i < matrix.length; i++) {
-            // If the object is greater than the last element in the row, continue.
-            if((int)matrix[i][matrix[i].length - 1] < (int)what) {
-                continue;
+        // Iterate through matrix's columns. (matrix indices are organised as [row][column] rather than [column][row])
+        for(int i = 0; i < matrix[0].length; i++) {
+            // If the current element in the column is equal to the object we're searching for, return the index of the element.
+            if(matrix[0][i].equals(what)) {
+                return i;
             }
-            // If the object is less than the first element in the row, return -1.
-            if((int)matrix[i][0] > (int)what) {
-                return -1;
-            }
-            // Iterate through the row.
-            for(int j = 0; j < matrix[i].length; j++) {
-                // If the object is equal to the current element, return the index.
-                if(matrix[i][j] == what) {
-                    return i * matrix[i].length + j;
+            // If the current element in the column is greater than the object we're searching for, iterate through the column.
+            if(matrix[0][i].hashCode() > what.hashCode()) {
+                for(int j = 0; j < matrix.length; j++) {
+                    // If the current element in the column is equal to the object we're searching for, return the index of the element.
+                    if(matrix[j][i].equals(what)) {
+                        return i * matrix.length + j;
+                    }
                 }
             }
         }
+        // If the object was not found, return -1.
         return -1;
     }
 }
