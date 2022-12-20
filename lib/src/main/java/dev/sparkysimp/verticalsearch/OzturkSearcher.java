@@ -4,16 +4,28 @@ import java.math.*;
 /**
  * A class that contains methods for searching in arrays using Öztürk's algorithm.
  */
-
 public class OzturkSearcher {
+
+    private ArraySizePair getClosestFactors (int number) {
+        int closestFactor=0;
+        int closestFactor2=0;
+        for (int i=1; i<=number; i++) {
+            if (number%i==0) {
+                if (Math.abs(i-number/i)<Math.abs(closestFactor-closestFactor2)) {
+                    closestFactor=i;
+                    closestFactor2=number/i;
+                }
+            }
+        }
+        return new ArraySizePair(closestFactor, closestFactor2);
+    }
     /**
      * Generates a pair of numbers that are the closest to the square root of the array length. 
      * @param array The array to get the size of.
      * @return A pair of numbers that are the closest to the square root of the array length.
      */
     public ArraySizePair getArraySizePair(Object[] array) {
-
-        return new ArraySizePair((int)Math.floor((int)Math.sqrt(array.length)), (int)Math.ceil((int)Math.sqrt(array.length)));
+        return getClosestFactors(array.length);
     }
     /**
      * Transforms a 1D array into a 2D array.
